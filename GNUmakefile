@@ -185,7 +185,7 @@ fmt-check:
 	@unformatted=$$(gofmt -l $(FMT_PATHS)); [ -z "$$unformatted" ] && exit 0; echo "Unformatted:"; for fn in $$unformatted; do echo "  $$fn"; done; exit 1
 
 
-gen-device: gen-device-avr gen-device-esp gen-device-nrf gen-device-sam gen-device-sifive gen-device-kendryte gen-device-nxp gen-device-rp
+gen-device: gen-device-avr gen-device-esp gen-device-nrf gen-device-sam gen-device-sifive gen-device-kendryte gen-device-nxp gen-device-rp gen-device-renesas
 ifneq ($(STM32), 0)
 gen-device: gen-device-stm32
 endif
@@ -234,7 +234,7 @@ gen-device-rp: build/gen-device-svd
 	GO111MODULE=off $(GO) fmt ./src/device/rp
 
 gen-device-renesas: build/gen-device-svd
-	./build/gen-device-svd -source=https://github.com/tinygo-org/renesas-svd lib/renesas-svd/ src/device/renesas/
+	./build/gen-device-svd -source=https://github.com/cmsis-svd/cmsis-svd/tree/master/data/Renesas lib/cmsis-svd/data/Renesas/ src/device/renesas/
 	GO111MODULE=off $(GO) fmt ./src/device/renesas
 
 # Get LLVM sources.
